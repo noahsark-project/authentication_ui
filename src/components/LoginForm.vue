@@ -2,20 +2,19 @@
   <a-form
     id="components-form-demo-normal-login"
     :form="form"
-    class="login-form"
     @submit="handleSubmit"
   >
     <a-form-item>
       <a-input
         v-decorator="[
-          'email',
-          { rules: [{ required: true, message: 'Please input your E-mail!' }] }
+          'username',
+          { rules: [{ required: true, message: 'Please input your username!' }] }
         ]"
-        placeholder="E-mail"
+        placeholder="Username"
       >
         <a-icon
           slot="prefix"
-          type="mail"
+          type="user"
           style="color: rgba(0,0,0,.25)"
         />
       </a-input>
@@ -48,6 +47,7 @@
       >
         Remember me
       </a-checkbox>
+  
       <a
         class="login-form-forgot"
         href=""
@@ -61,7 +61,7 @@
       >
         Log in
       </a-button>
-      Or <a href="#/registry">
+      Or <a href="/registry">
         register now!
       </a>
     </a-form-item>
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
   beforeCreate () {
     this.form = this.$form.createForm(this);
@@ -80,6 +80,15 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+          axios.post('/oauth/authorize',{
+              username: values.username,
+              password: values.password
+          }).then(result => {
+
+              this.$router.replace({name:'login'});
+          }).catch( error=>{
+            console.log(error);
+          });
         }
       });
     },
@@ -87,9 +96,6 @@ export default {
 };
 </script>
 <style scope>
- .login-form {
-  max-width: 300px;
-}
 .login-form-forgot {
   float: right;
 }

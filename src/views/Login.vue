@@ -2,6 +2,7 @@
     <a-row>
         <a-col :span="8"></a-col>
         <a-col :span="8">
+            <h2>Welcome to Hoahsark</h2>
             <LoginForm class="loginForm"></LoginForm>
         </a-col>
         <a-col :span="8"></a-col>
@@ -17,7 +18,5 @@ export default {
 }
 </script>
 <style lang="css" scope>
-    /* .loginForm{
-        width:400px;
-    } */
+    
 </style>

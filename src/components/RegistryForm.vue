@@ -159,12 +159,12 @@ export default {
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
-          Vue.axios.post('/api/v1/registry',{
+          this.$axios.post('/api/v1/registry',{
               email: values.email,
               password: values.password,
               nickname: valuse.nickname
           }).then(result => {
-              Vue.$router.replace({name:'login'});
+              this.$router.replace({name:'login'});
           });
         }
       });
