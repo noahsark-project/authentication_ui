@@ -57,24 +57,7 @@
         @blur="handleConfirmBlur"
       />
     </a-form-item>
-    <a-form-item
-      v-bind="formItemLayout"
-    >
-      <span slot="label">
-        Nickname&nbsp;
-        <a-tooltip title="What do you want others to call you?">
-          <a-icon type="question-circle-o" />
-        </a-tooltip>
-      </span>
-      <a-input
-        v-decorator="[
-          'nickname',
-          {
-            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }]
-          }
-        ]"
-      />
-    </a-form-item>
+
     <a-form-item v-bind="tailFormItemLayout">
       <a-checkbox
         v-decorator="['agreement', {valuePropName: 'checked'}]"
@@ -119,7 +102,7 @@ const residences = [{
     }],
   }],
 }];
-
+import axios from 'axios';
 export default {
   data () {
     return {
@@ -156,15 +139,15 @@ export default {
   methods: {
     handleSubmit  (e) {
       e.preventDefault();
+      let self = this;
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
-          this.$axios.post('/api/v1/registry',{
-              email: values.email,
+          axios.post('/api/v1/users',{
+              username: values.email,
               password: values.password,
-              nickname: valuse.nickname
           }).then(result => {
-              this.$router.replace({name:'login'});
+              self.$router.replace({name:'login'});
           });
         }
       });
